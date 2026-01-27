@@ -15,10 +15,10 @@ Consider a directory with media files named like this:
 Even though there's 4 files, there's only 2 episodes of the show. Jellyfin won't virtually combine these files since the A and B **suffix** aren't part of the required naming pattern.
 The script will rename the files like this to match the required naming pattern.
 - /Show Name
-  - Show Name S01E01 Title [Optional Data]__-part-1__.media
-  - Show Name S01E01 Title [Optional Data]__-part-2__.media
-  - Show Name S01E02 Title [Optional Data]__-part-1__.media
-  - Show Name S01E02 Title [Optional Data]__-part-2__.media
+  - Show Name S01E01__-part-1__.media
+  - Show Name S01E01__-part-2__.media
+  - Show Name S01E02__-part-1__.media
+  - Show Name S01E02__-part-2__.media
 
 ## Usage
 
@@ -36,13 +36,13 @@ The script does this:
 * Start in __working directory__
 * Use __regex__ to match files with this name pattern 'Show Name [Series Coordinates][Old Suffix][Additional Text][File Extension]'
 * Use __dictionary__ to map [Old Suffix] to [__New Suffix__] (e.g. A to -part-1, B to -part-2)
-* Reorder the name pieces and rename the file 'Show Name [Series Coordinates][Additional Text][New Suffix][File Extension]
+* Reorder the name pieces and rename the file 'Show Name [Series Coordinates][New Suffix][File Extension]
 
 ###### Regex Pattern 
 The script expects 4 capture groups in the regex pattern to perform the rename:
 - 1st capture group: Series Coordinates - Text describing the season and episode. The main match-finding muscle. e.g. S01E01, S13E04
 - 2nd capture group: __Old Suffix__ - Text indicating this file is part of a single episode or similar media unit. This capture group is used to key into the dictionary and replaced by the fetched value e.g. The A after S01E01A, or the B after S13E04B
-- 3rd capture group: Additional Text - any text after the series coordinates describing the file
+- 3rd capture group: Additional Text - any text after the series coordinates describing the file, will be omitted 
 - 4th capture group: File Extension - the extension of the file.
 
 Any text before the first capture group is preserved.
@@ -56,4 +56,4 @@ python .\jellyfin_file_rename.py -d .\test_data\ -r "(S\d\dE\d\d)([AB])(.*)(\.mk
 This script writes a log file, undo_rename_log.txt, to the working directory which can be used by a separate reversal script to undo this script's naming changes.
 
 ## Limitations
-- The file name breakdown is limited to 4 capture groups and the 2nd capture group gets replaced. This may not fit uses cases where media files are acquired with different naming patterns.
+- The file name breakdown is limited to 4 capture groups. The 2nd capture group gets replaced and the 3rd capture group getss omitted. This may not fit uses cases where media files are acquired with different naming patterns.
