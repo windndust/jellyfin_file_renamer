@@ -1,8 +1,21 @@
 """
-Jellyfin File Renamer
+Jellyfin File Renamer Parts Indicator
 ---------------------
 Description:    Lightweight python script that reads files in a working directory, matches the file names to an input regex pattern, 
                 and renames matching files using an input dictionary
+---------------------
+Goal:           Change arbitrary part indicators in filenames to Jellyfin supported part indicators so distinct media files can be
+                virtually combined in the Jellyfin UI
+---------------------
+Definition:     See explanation of Jellyfin's handling media split into multiple parts here:
+                https://jellyfin.org/docs/general/server/media/shows/#multiple-parts
+                Parts indicator: A character combination signifying a file is part of a whole
+                examples:
+                A
+                B
+                -part-1
+                -part-2
+---------------------
 Author:         WinDnDusT
 Date:           Jan 2026 
 Github:         https://github.com/windndust/jellyfin_file_renamer
