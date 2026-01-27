@@ -33,9 +33,8 @@ def generate_new_name(match: Match, suffix_map: dict):
     series_coordinates = match.group(1)
     old_suffix = match.group(2)
     new_suffix = suffix_map.get(old_suffix, old_suffix)
-    additional_text = match.group(3)
     file_extension = match.group(4)
-    return f"{series_coordinates}{additional_text}{new_suffix}{file_extension}"
+    return f"{series_coordinates}{new_suffix}{file_extension}"
 
 def log_the_changes(log_entries: list, target_dir: Path):
     if log_entries:
